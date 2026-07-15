@@ -110,3 +110,6 @@ def delete_flight(flight_id):
         db.session.commit()
         return True
     return False
+
+def get_all_flights():
+    return Flight.query.all()

@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block title%}Flight Updates{% endblock %}
+
+{%block content %}
+<p>Use this page to update flight information.</p>
+<form action="/api/update_flight" method="POST">
+    <label for="flight_id">Flight ID:</label>
+    <input type="text" id="flight_id" name="flight_id" value="{{ flight.id }}" readonly><br><br>
+    <label for="depature_time">Departure Time:</label>
+    <input type="text" id="departure_time" name="departure_time" value="{{flight.departure_time}}"><br><br>
+    <label for="arrival_time">Arrival Time:</label>
+    <input type="text" id="arrival_time" name="arrival_time" value="{{flight.arrival_time}}"><br><br>
+    <label for="departure_destination">Departure Destination:</label>
+    <input type="text" id="departure_destination" name="departure_destination" value="{{flight.departure_destination}}"><br><br>
+    <label for="destination">Destination:</label>
+    <input type="text" id="destination" name="destination" value="{{flight.destination}}"><br><br>
+    <label for="plane_id">Plane ID:</label>
+    <input type="text" id="plane_id" name="plane_id" value="{{flight.plane_id}}"><br><br>
+    <label for="pilot_id">Pilot ID:</label>
+    <input type="text" id="pilot_id" name="pilot_id" value="{{flight.pilot_id}}"><br><br>
+    <button type="submit">Update Flight</button>
+</form>
+{% endblock %}

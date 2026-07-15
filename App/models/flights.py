@@ -12,13 +12,15 @@ class Flight(db.Model):
     departure_destination = db.Column(db.String(50), nullable=True)
     destination = db.Column(db.String(50), nullable=True)
     
+    plane = db.relationship('Plane', backref=db.backref('flights', lazy=True))
+    pilot = db.relationship('Pilot', backref=db.backref('flights', lazy=True))
+    
     def get_json(self):
-        pilot = Pilot.query.get(self.pilot_id)
-        plane = Plane.query.get(self.plane_id)
+        
         return {
             'id': self.id,
-            'plane': plane.model,
-            'pilot': pilot.name,
+            'plane': self.plane.model,
+            'pilot': self.pilot.name,
             'arrival_time': self.arrival_time,
             'departure_time': self.departure_time,
             'departure_destination': self.departure_destination,

@@ -1,8 +1,10 @@
 from flask import Blueprint, render_template, jsonify, request, send_from_directory, flash, redirect, url_for
 from flask_jwt_extended import jwt_required, current_user as jwt_current_user
 
-from App.controllers.user import get_all_flights_json, create_Flight, delete_flight
+from App.controllers.user import get_all_flights_json, create_Flight, delete_flight, get_all_flights
+from App.models.Planes import Plane
 from App.models.flights import Flight
+from App.models.pilots import Pilot
 from App.views.user import user_views
 from App.database import db
 
@@ -13,7 +15,7 @@ flight_views = Blueprint('flight_views', __name__, template_folder='../templates
 @jwt_required()
 def get_flights_action():
     is_admin = jwt_current_user.is_admin 
-    flights = get_all_flights_json()
+    flights = get_all_flights()
     return render_template('flights.html', flights=flights,is_admin=is_admin)
     #return jsonify(flights)
 
@@ -34,20 +36,38 @@ def delete_flight_action():
     else:
         return redirect(url_for('flight_views.get_flights_action', message=f"Flight with id {flight_id} not found"))
 
-@flight_views.route('/api/update_flight', methods=['PUT'])
+@flight_views.route('/api/update_flight', methods=['POST'])
 def update_flight_action():
-    data = request.json
-    flight_id = data['flight_id']
+   flight_id = request.form.get('flight_id')
+   flight = Flight.query.get(flight_id)
+   if flight:
+    new_departure_time = request.form.get('departure_time')
+    new_arrival_time = request.form.get('arrival_time')
+    new_plane_id = request.form.get('plane_id')
+    new_pilot_id = request.form.get('pilot_id')
+    Pla = Plane.query.get(new_plane_id)
+    Pil = Pilot.query.get(new_pilot_id)
+    if not Pla or not Pil:
+        flash("Invalid plane or pilot ID", "error")
+        return redirect(url_for('flight_views.get_flights_action'))
+    new_departure_destination = request.form.get('departure_destination')
+    new_destination = request.form.get('destination')
+    flight.departure_time = new_departure_time
+    flight.arrival_time = new_arrival_time
+    flight.plane_id = new_plane_id
+    flight.pilot_id = new_pilot_id
+    flight.departure_destination = new_departure_destination
+    flight.destination = new_destination
+    db.session.commit()
+    return redirect(url_for('flight_views.get_flights_action'))
+   else:
+    flash(f"Flight with id {flight_id} not found", "error")
+    return redirect(url_for('flight_views.get_flights_action'))
+
+@flight_views.route('/api/update_flight/<int:flight_id>', methods=['GET'])
+def update_flight_page(flight_id):
     flight = Flight.query.get(flight_id)
     if flight:
-        # Update flight attributes
-        flight.departure_time = data.get('departure_time', flight.departure_time)
-        flight.arrival_time = data.get('arrival_time', flight.arrival_time)
-        flight.plane_id = data.get('plane_id', flight.plane_id)
-        flight.pilot_id = data.get('pilot_id', flight.pilot_id)
-        flight.departure_destination = data.get('departure_destination', flight.departure_destination)
-        flight.destination = data.get('destination', flight.destination)
-        db.session.commit()
-        return jsonify({'message': f"Flight with id {flight_id} updated"})
+        return render_template('Flight Updates.html', flight=flight)
     else:
         return jsonify({'message': f"Flight with id {flight_id} not found"}), 404
