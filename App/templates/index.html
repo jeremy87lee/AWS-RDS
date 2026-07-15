@@ -1,13 +1,25 @@
 {% extends "layout.html" %}
-{% block title %}Flask MVC App{% endblock %}
-{% block page %}Flask MVC App{% endblock %}
+{% block title %}Flight Tracker Application{% endblock %}
+{% block page %}Flight Tracker{% endblock %}
 
 {{ super() }}
 
 {% block content %}
-    <h1>Flask MVC</h1>
+    <h1 style="color: black;">Flight Tracker</h1>
     {% if is_authenticated %}
         <p> Welcome {{current_user.username}} </p>
     {% endif %}
-    <p>This is a boileplate flask application which follows the MVC pattern for structuring the project.</p>
+    <p>This is a flight tracking application. It allows users to track flights in real-time. It displays useful information such as: </p>
+    <ul>
+        <li>Flight number</li>
+        <li>Departure and arrival airports</li>
+        <li>Departure and arrival times</li>
+        <li>Pilot and Plane information</li>
+    </ul>
+
+    <style>
+        body {
+            background-color: beige;
+        }
+    </style>
 {% endblock %}

@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1>Flights</h1>
+    <ul>
+        {% for flight in flights %}
+            <li>{{ flight.flight_number }} - {{ flight.departure_destination }} to {{ flight.destination }}</li>
+            {% if is_admin %}
+                <form action="/api/delete_flight" method="POST">
+                    <input type="hidden" name="flight_id" value="{{ flight.id }}">
+                    <button>Delete</button>
+                </form>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endblock %}
