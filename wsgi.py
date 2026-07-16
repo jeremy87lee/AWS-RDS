@@ -4,7 +4,7 @@ from flask.cli import with_appcontext, AppGroup
 from App.database import db, get_migrate
 from App.models import User
 from App.main import create_app
-from App.controllers import ( create_user, get_all_users_json, get_all_users, initialize )
+from App.controllers import ( create_user, get_all_users_json, get_all_users, initialize, delete_gate, delete_plane, delete_pilot )
 from App.models.Gates import Gate
 
 
@@ -98,6 +98,101 @@ def delete_flight_command(flight_id):
         print(f"Flight with id {flight_id} deleted")
     else:
         print(f"Flight with id {flight_id} not found")
+        
+@user_cli.command("delete gate", help="Deletes a gate")
+@click.argument("gate_id", type=int)
+def delete_gate_command(gate_id):
+    success = delete_gate(gate_id)
+    if success:
+        print(f"Gate with id {gate_id} deleted")
+    else:
+        print(f"Gate with id {gate_id} not found")
+
+@user_cli.command("delete plane", help="Deletes a plane")
+@click.argument("plane_id", type=int)
+def delete_plane_command(plane_id):
+    success = delete_plane(plane_id)
+    if success:
+        print(f"Plane with id {plane_id} deleted")
+    else:
+        print(f"Plane with id {plane_id} not found")
+        
+@user_cli.command("delete pilot", help="Deletes a pilot")
+@click.argument("pilot_id", type=int)
+def delete_pilot_command(pilot_id):
+    success = delete_pilot(pilot_id)
+    if success:
+        print(f"Pilot with id {pilot_id} deleted")
+    else:
+        print(f"Pilot with id {pilot_id} not found")
+
+@user_cli.command("create gate", help="Creates a gate")
+@click.argument("terminal", default="A1")
+@click.argument("flight_id", type=int, default=1)
+def create_gate_command(terminal, flight_id):
+    from App.controllers.user import create_Gate
+    success = create_Gate(terminal, flight_id)
+    if success:
+        print(f"Gate created for flight id {flight_id} at terminal {terminal}")
+    else:
+        print(f"Failed to create gate. Flight id {flight_id} may not exist.")
+
+@user_cli.command("create plane", help="Creates a plane")
+@click.argument("model", default="Boeing 737")
+@click.argument("capacity", type=int, default=180)
+def create_plane_command(model, capacity):
+    from App.controllers.user import create_Plane
+    plane = create_Plane(model, capacity)
+    if plane:
+        print(f"Plane created with id {plane.id}")
+    else:
+        print("Failed to create plane.")
+
+@user_cli.command("create pilot", help="Creates a pilot")
+@click.argument("name", default="John Doe")
+def create_pilot_command(name):
+    from App.controllers.user import create_Pilot
+    pilot = create_Pilot(name)
+    if pilot:
+        print(f"Pilot created with id {pilot.id}")
+    else:
+        print("Failed to create pilot.")
+        
+#commands to update
+@user_cli.command("update plane",help="Updates plane info")
+@click.argument("plane_id", type=int)
+@click.argument("model", default=None)
+@click.argument("capacity", type=int, default=None)
+def update_plane_command(plane_id, model, capacity):
+    from App.controllers.user import update_plane
+    success = update_plane(plane_id, model, capacity)
+    if success:
+        print(f"Plane with id {plane_id} updated")
+    else:
+        print(f"Plane with id {plane_id} not found or no changes made")
+
+@user_cli.command("update pilot",help="Updates pilot info")
+@click.argument("pilot_id", type=int)
+@click.argument("name", default=None)
+def update_pilot_command(pilot_id, name):
+    from App.controllers.user import update_pilot
+    success = update_pilot(pilot_id, name)
+    if success:
+        print(f"Pilot with id {pilot_id} updated")
+    else:
+        print(f"Pilot with id {pilot_id} not found or no changes made")
+
+@user_cli.command("update gate",help="Updates gate info")
+@click.argument("gate_id", type=int)
+@click.argument("terminal", default=None)
+@click.argument("flight_id", type=int, default=None)
+def update_gate_command(gate_id, terminal, flight_id):
+    from App.controllers.user import update_gate
+    success = update_gate(gate_id, terminal, flight_id)
+    if success:
+        print(f"Gate with id {gate_id} updated")
+    else:
+        print(f"Gate with id {gate_id} not found or no changes made")
 '''
 Test Commands
 '''

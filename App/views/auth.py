@@ -31,6 +31,7 @@ def login_action():
     response = redirect(url_for('index_views.home_page'))
     if not token:
         flash('Bad username or password given'), 401
+        return redirect(url_for('index_views.index_page'))
     else:
         flash('Login Successful')
         set_access_cookies(response, token) 

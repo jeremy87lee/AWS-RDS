@@ -21,10 +21,30 @@ def get_flights_action():
 
 @flight_views.route('/api/new_flight', methods=['POST'])
 def create_flight_action():
-    data = request.json
-    flight = create_Flight(data['departure_time'], data['arrival_time'], data['plane_id'], data['pilot_id'], data['departure_destination'], data['destination'])
-    return jsonify({'message': f"Flight {flight.flight_number} created with id {flight.id}"})
+    flight_data = request.form
+    departure_time = flight_data.get('departure_time')
+    arrival_time = flight_data.get('arrival_time')
+    plane_id = flight_data.get('plane_id')
+    pilot_id = flight_data.get('pilot_id')
+    departure_destination = flight_data.get('departure_destination')
+    destination = flight_data.get('destination')
 
+    # Validate the plane and pilot IDs
+    plane = Plane.query.get(plane_id)
+    pilot = Pilot.query.get(pilot_id)
+    if not plane or not pilot:
+        flash("Invalid plane or pilot ID", "error")
+        return redirect(url_for('flight_views.create_flight_page'))
+
+    new_flight = create_Flight(departure_time, arrival_time, plane_id, pilot_id, departure_destination, destination)
+    if not new_flight:
+        flash("Failed to create flight. Please check the provided data.", "error")
+        return redirect(url_for('flight_views.create_flight_page'))
+    db.session.add(new_flight)
+    db.session.commit()
+    flash("Flight created successfully!", "success")
+    return redirect(url_for('flight_views.get_flights_action'))
+ 
 @flight_views.route('/api/delete_flight', methods=['POST'])
 def delete_flight_action():
     flight_id = request.form.get('flight_id')
@@ -52,6 +72,9 @@ def update_flight_action():
         return redirect(url_for('flight_views.get_flights_action'))
     new_departure_destination = request.form.get('departure_destination')
     new_destination = request.form.get('destination')
+    if new_departure_time >= new_arrival_time:
+        flash("Departure time must be before arrival time.", "error")
+        return redirect(url_for('flight_views.get_flights_action'))
     flight.departure_time = new_departure_time
     flight.arrival_time = new_arrival_time
     flight.plane_id = new_plane_id
@@ -71,3 +94,11 @@ def update_flight_page(flight_id):
         return render_template('Flight Updates.html', flight=flight)
     else:
         return jsonify({'message': f"Flight with id {flight_id} not found"}), 404
+
+@flight_views.route('/api/create_flight', methods=['GET'])
+@jwt_required()
+def create_flight_page():
+    current_user = jwt_current_user
+    if not current_user.is_admin:
+        return jsonify({'message': 'Unauthorized access'}), 403
+    return render_template('Flight Creation.html')

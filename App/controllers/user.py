@@ -48,6 +48,11 @@ def update_user(id, username):
     return None
 
 def create_Pilot(name):
+    Pilots = Pilot.query.all()
+    for pilot in Pilots:
+        if pilot.name == name:
+            print(f"Pilot with name {name} already exists.")
+            return None  # Pilot already exists
     new_pilot = Pilot(name=name)
     db.session.add(new_pilot)
     db.session.commit()
@@ -64,6 +69,13 @@ def create_Gate(terminal, flight_id):
     if not flight:
         print(f"Flight ID {flight_id} does not exist.")
         return None  # Flight ID does not exist
+    
+    Flights = Gate.query.all()
+    for f in Flights:
+        if f.flight == flight_id:
+            print(f"Gate for Flight ID {flight_id} already exists.")
+            return None  # Gate for this flight already exists
+    
     new_gate = Gate(terminal=terminal, flight=flight_id)
     db.session.add(new_gate)
     db.session.commit()
@@ -78,6 +90,11 @@ def create_Flight(departure_time, arrival_time, plane_id, pilot_id, departure_de
     if not pilot:
         print(f"Pilot ID {pilot_id} does not exist.")
         return None  # Pilot ID does not exist
+
+    if departure_time >= arrival_time:
+        print("Departure time must be before arrival time.")
+        return None  # Invalid time range
+    
     new_flight = Flight(departure_time=departure_time, arrival_time=arrival_time, plane_id=plane_id, pilot_id=pilot_id, departure_destination=departure_destination, destination=destination)
     db.session.add(new_flight)
     db.session.commit()
@@ -111,5 +128,80 @@ def delete_flight(flight_id):
         return True
     return False
 
+#Code to retrieve all flights, gates, planes, and pilots from the database
 def get_all_flights():
     return Flight.query.all()
+
+def get_all_gates():
+    return Gate.query.all()
+
+def get_all_planes():
+    return Plane.query.all()
+
+def get_all_pilots():
+    return Pilot.query.all()
+
+#Code to update gate, plane, and pilot information in the database
+def update_gate(gate_id,terminal,flight_id):
+    gate = Gate.query.get(gate_id)
+    flight = Flight.query.get(flight_id)
+    
+    if not flight:
+        print(f"Flight ID {flight_id} does not exist.")
+        return False  # Flight ID does not exist
+    if gate:
+        gate.terminal = terminal
+        gate.flight = flight_id
+        db.session.commit()
+        return True
+    else:
+        print(f"Gate ID {gate_id} does not exist.")
+        
+    return False
+
+def update_plane(plane_id,model,capacity):
+    plane = Plane.query.get(plane_id)
+    if plane:
+        plane.model = model
+        plane.capacity = capacity
+        db.session.commit()
+        return True
+    return False
+
+def update_pilot(pilot_id,name):
+    pilot = Pilot.query.get(pilot_id)
+    names = Pilot.query.all()
+    for p in names:
+        if p.name == name and p.id != pilot_id:
+            print(f"Another pilot with name {name} already exists.")
+            return False  # Pilot with the same name already exists
+    if pilot:
+        pilot.name = name
+        db.session.commit()
+        return True
+    return False
+
+#Code to delete gate, plane, and pilot information from the database
+def delete_gate(gate_id):
+    gate = Gate.query.get(gate_id)
+    if gate:
+        db.session.delete(gate)
+        db.session.commit()
+        return True
+    return False
+
+def delete_plane(plane_id):
+    plane = Plane.query.get(plane_id)
+    if plane:
+        db.session.delete(plane)
+        db.session.commit()
+        return True
+    return False
+
+def delete_pilot(pilot_id):
+    pilot = Pilot.query.get(pilot_id)
+    if pilot:
+        db.session.delete(pilot)
+        db.session.commit()
+        return True
+    return False

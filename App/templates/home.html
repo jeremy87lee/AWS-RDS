@@ -3,13 +3,25 @@
 {% block content %}
     <h1>HOME PAGE!</h1>
     <p>Welcome {{current_user.username}} to the Flight Tracker Application!</p>
-    <a href="/api/flights">FLIGHTS PAGE</a>
+
+    <button style="background-color: #ff9800; padding:10px; border-radius: 5px;">
+        <a href="/api/flights" style="color:black; font-weight: bold;">FLIGHTS PAGE</a>
+    </button>
+        
+    <br><br>
+
     {% if current_user.is_admin%}
-    <p>PUT BUTTON FOR ADMIN TO CREATE FLIGHTS HERE</p>
+    
+    <button style="background-color: #ff9800; padding: 10px;  border-radius: 5px;">
+        <a href="/api/create_flight" style="color:black; font-weight: bold;">CREATE FLIGHT</a>
+     </button>
+       
     {% endif %}
+    
     <style>
     body{
         background-color: beige;
     }
     </style>
+
 {% endblock %}

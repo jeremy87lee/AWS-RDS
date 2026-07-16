@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block title %}
+  Flight Creation
+{% endblock %}
+
+{% block content %}
+    <h1>Flight Creation</h1>
+    <p>Create a new flight here.</p>
+    <form action="/api/new_flight" method="POST">
+        <label for="departure_time">Departure Time:</label>
+        <input type="datetime-local" id="departure_time" name="departure_time" required><br><br>
+
+        <label for="arrival_time">Arrival Time:</label>
+        <input type="datetime-local" id="arrival_time" name="arrival_time" required><br><br>
+
+        <label for="departure_destination">Departure Destination:</label>
+        <input type="text" id="departure_destination" name="departure_destination" required><br><br>
+
+        <label for="destination">Destination:</label>
+        <input type="text" id="destination" name="destination" required><br><br>
+
+        <label for="plane_id">Plane ID:</label>
+        <input type="number" id="plane_id" name="plane_id" required><br><br>
+
+        <label for="pilot_id">Pilot ID:</label>
+        <input type="number" id="pilot_id" name="pilot_id" required><br><br>
+
+        <button type="submit">Create Flight</button>
+    </form>
+{% endblock %}
