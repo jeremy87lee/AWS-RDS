@@ -1,28 +1,54 @@
 {% extends "layout.html" %}
-{% block title %}Flight Tracker Application{% endblock %}
-{% block page %}Flight Tracker{% endblock %}
+{% block title %}Flight Application{% endblock %}
+{% block page %}Flight Web Application{% endblock %}
 
 {{ super() }}
 
 {% block content %}
-    <h1 style="color: black;">Flight Tracker</h1>
-    {% if is_authenticated %}
-        <p> Welcome {{current_user.username}} </p>
-    {% endif %}
-    <p>This is a flight tracking application. It allows users to track flights in real-time. It displays useful information such as: </p>
-    <ul>
-        <li>Flight number</li>
-        <li>Departure and arrival airports</li>
-        <li>Departure and arrival times</li>
-        <li>Pilot and Plane information</li>
-    </ul>
     
+    <div class="break-out" style="text-align:center; width:100vw; padding-top:200px; padding-bottom:-500px;">
+        <div class="break-out animated">
+            <h1 style="font-weight:bold; font-size:125px; color: #3d2822">Coffee Coordinates</h1>
+            <p style="color: #3d2822; font-weight:bold; font-size:50px;">Coffee themed flight app</p>
+        </div>
+      
+        <div style="text-align:right; width:100vw; padding-top: 40px;" class="break-out">
+            <p style="font-size:30px; border-style:solid; background-color: #ff9800; 
+            color:white; font-weight:bold; border-color:black; margin-right: 10px; margin-left: 1400px; 
+            text-align:center; border-radius: 5px;">JEREMY LOVELL<p>
+        </div>
+    </div>
    
     <style>
+        
+
         body {
             background-color: beige;
+            scroll-behaviour: smooth;
+            scroll-snap-type: y mandatory;
+            scroll-snap-align: start;
+        }
+        
+        .break-out{
+            width:100vw;
+            left:50%;
+            right:50%;
+            margin-left:-50vw;
+            margin-right:-50vw;
+            position:relative;
         }
 
+        .animated{
+            animation: grow-and-shrink 2s ease-in-out;
+        }
 
+        @keyframes grow-and-shrink {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.5); 
+            }
+        }
     </style>
 {% endblock %}

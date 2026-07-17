@@ -38,7 +38,7 @@ def create_flight_action():
 
     new_flight = create_Flight(departure_time, arrival_time, plane_id, pilot_id, departure_destination, destination)
     if not new_flight:
-        flash("Failed to create flight. Please check the provided data.", "error")
+        flash("Failed to create flight. Please check the provided data for flight clashes or wrong IDs.", "error")
         return redirect(url_for('flight_views.create_flight_page'))
     db.session.add(new_flight)
     db.session.commit()
@@ -75,6 +75,19 @@ def update_flight_action():
     if new_departure_time >= new_arrival_time:
         flash("Departure time must be before arrival time.", "error")
         return redirect(url_for('flight_views.get_flights_action'))
+    new_plane_id = int(new_plane_id)
+    new_pilot_id = int(new_pilot_id)
+    Flights = Flight.query.all()
+    for f in Flights:
+        if f.id == int(flight_id):
+            continue
+        if (new_departure_time < f.arrival_time and new_arrival_time > f.departure_time) and new_pilot_id == f.pilot_id:
+            flash(f"Pilot {new_pilot_id} already has another flight at that time!")
+            return redirect(url_for('flight_views.get_flights_action'))
+        if (new_departure_time < f.arrival_time and new_arrival_time > f.departure_time) and new_plane_id == f.plane_id:
+            flash(f"Plane {new_plane_id} already has another flight at that time!")
+            return redirect(url_for('flight_views.get_flights_action'))
+        
     flight.departure_time = new_departure_time
     flight.arrival_time = new_arrival_time
     flight.plane_id = new_plane_id

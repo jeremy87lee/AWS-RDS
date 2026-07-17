@@ -6,6 +6,7 @@
         {% for flight in flights %}
             <li>{{ flight.id }} - {{ flight.departure_destination }} to {{ flight.destination }}</li>
             <li>{{flight.plane.model}} - {{flight.pilot.name}}</li>
+            <li>Departure: {{ flight.departure_time }} - Arrival: {{ flight.arrival_time }}</li>
             {% if is_admin %}
                 <form action="/api/delete_flight" method="POST">
                     <input type="hidden" name="flight_id" value="{{ flight.id }}">

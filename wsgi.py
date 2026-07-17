@@ -75,8 +75,8 @@ def show_admins_command():
     print(get_all_admins_json())
     
 @user_cli.command("create flight", help="Creates a flight")
-@click.argument("departure_time", default="2023-01-01 10:00:00")
-@click.argument("arrival_time", default="2023-01-01 12:00:00")
+@click.argument("departure_time", default="2024-06-01 12:00:00")
+@click.argument("arrival_time", default="2024-06-01 15:00:00")
 @click.argument("plane_id", default=1)
 @click.argument("pilot_id", default=1)
 @click.argument("departure_destination", default="JFK")

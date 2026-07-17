@@ -5,6 +5,7 @@ from App.models.Planes import Plane
 from App.models.admin import Admin
 from App.models.flights import Flight
 from App.models.pilots import Pilot
+from datetime import datetime
 
 def create_user(username, password, is_admin):
     if is_admin:
@@ -82,6 +83,8 @@ def create_Gate(terminal, flight_id):
     return new_gate
 
 def create_Flight(departure_time, arrival_time, plane_id, pilot_id, departure_destination, destination):
+    plane_id = int(plane_id)
+    pilot_id = int(pilot_id)
     plane = Plane.query.get(plane_id)
     if not plane:
         print(f"Plane ID {plane_id} does not exist.")
@@ -95,6 +98,16 @@ def create_Flight(departure_time, arrival_time, plane_id, pilot_id, departure_de
         print("Departure time must be before arrival time.")
         return None  # Invalid time range
     
+    Flights = Flight.query.all()
+    for f in Flights:
+       
+        if (departure_time < f.arrival_time and arrival_time > f.departure_time) and pilot_id == f.pilot_id:
+            print(f"Pilot {pilot_id} already has another flight at that time!")
+            return None;
+        if (departure_time < f.arrival_time and arrival_time > f.departure_time) and plane_id == f.plane_id:
+            print(f"Plane {plane_id} already has another flight at that time!")
+            return None;
+        
     new_flight = Flight(departure_time=departure_time, arrival_time=arrival_time, plane_id=plane_id, pilot_id=pilot_id, departure_destination=departure_destination, destination=destination)
     db.session.add(new_flight)
     db.session.commit()
