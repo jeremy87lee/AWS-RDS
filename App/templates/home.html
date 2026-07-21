@@ -19,16 +19,22 @@
     </div>
     <div class="break-out" style="background-color: #3d2822; margin-bottom:-37px;">
         <h2>Planes</h2>
-        {% for plane in planes %}
-        <p>Plane model: {{plane.model}}</p>
-        <p>Plane capacity: {{plane.capacity}}</p>
-        {% endfor %}
+        <div class="lists">
+            {% for plane in planes %}
+            <div>
+                <p>Plane model: {{plane.model}}</p>
+                <p>Plane capacity: {{plane.capacity}}</p>
+            </div>
+            {% endfor %}
+        </div>
     </div>
     <div class="break-out" style="background-color: #ff9800">
         <h2>Pilots</h2>
-        {% for pilot in pilots %}
-        <p>Pilot Name: {{pilot.name}}</p>
-        {% endfor %}
+        <div class="lists">
+            {% for pilot in pilots %}
+            <p>Pilot Name: {{pilot.name}}</p>
+            {% endfor %}
+        </div>
     </div>
     {% endif %}
     
@@ -47,6 +53,16 @@
         position: relative;
         padding-left: 30px;    
     }
+
+    .lists{
+        display: flex;
+        flex-direction: row;
+        gap: 50px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    
     </style>
 
 {% endblock %}
