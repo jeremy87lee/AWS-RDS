@@ -1,5 +1,5 @@
 from flask import Blueprint, redirect, render_template, request, send_from_directory, jsonify
-from App.controllers import create_user, initialize
+from App.controllers import create_user, initialize, get_all_pilots, get_all_planes, get_all_gates
 
 index_views = Blueprint('index_views', __name__, template_folder='../templates')
 
@@ -18,4 +18,6 @@ def health_check():
 
 @index_views.route('/home', methods=['GET'])
 def home_page():
-    return render_template('home.html')
+    pilots = get_all_pilots()
+    planes = get_all_planes()
+    return render_template('home.html',pilots=pilots,planes=planes)

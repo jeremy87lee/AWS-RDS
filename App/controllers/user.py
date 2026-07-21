@@ -162,6 +162,13 @@ def update_gate(gate_id,terminal,flight_id):
     if not flight:
         print(f"Flight ID {flight_id} does not exist.")
         return False  # Flight ID does not exist
+    
+    Flights = Gate.query.all()
+    for f in Flights:
+        if f.flight == flight_id:
+            print(f"Gate for Flight ID {flight_id} already exists.")
+            return None  # Gate for this flight already exists
+    
     if gate:
         gate.terminal = terminal
         gate.flight = flight_id

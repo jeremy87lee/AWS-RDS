@@ -1,19 +1,57 @@
 {% extends "layout.html" %}
 
 {% block content %}
+<div class="break-out" style="padding-left:30px;">
     <h1>Flights</h1>
-    <ul>
-        {% for flight in flights %}
-            <li>{{ flight.id }} - {{ flight.departure_destination }} to {{ flight.destination }}</li>
-            <li>{{flight.plane.model}} - {{flight.pilot.name}}</li>
-            <li>Departure: {{ flight.departure_time }} - Arrival: {{ flight.arrival_time }}</li>
-            {% if is_admin %}
+    <div style="width:100%;">
+        <ul>
+            {% for flight in flights %}
+            <div class="list-content">
+                <div class="words">  
+                <li>{{ flight.id }} - {{ flight.departure_destination }} to {{ flight.destination }}</li>
+                <li>{{flight.plane.model}} - {{flight.pilot.name}}</li>
+                <li>Departure: {{ flight.departure_time }} - Arrival: {{ flight.arrival_time }}</li>
+                </div>
+                {% if is_admin %}
                 <form action="/api/delete_flight" method="POST">
                     <input type="hidden" name="flight_id" value="{{ flight.id }}">
                     <button>Delete</button>
                 </form>
                 <a href="/api/update_flight/{{ flight.id }}">Update</a>
-            {% endif %}
-        {% endfor %}
-    </ul>
+                {% endif %}
+            </div>
+            {% endfor %}
+            
+        </ul>
+    </div>
+</div>
+    <style>
+        body{
+            background-color:beige;
+        }
+
+        .break-out{
+            width:100vw;
+            height:100vh;
+            position: relative;
+            left:50%;
+            right:50%;
+            margin-left:-50vw;
+            margin-right:-50vw;
+        }
+        
+        .list-content{
+            box-shadow: 0px 5px 10px;
+            background-color: #664a20;
+            display: flex; 
+            padding:15px;
+            margin:15px; 
+            align-items:center;  
+            gap:600px;       
+        }
+
+        .words{
+            flex-direction:column;
+        }
+    </style>    
 {% endblock %}

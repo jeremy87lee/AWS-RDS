@@ -1,26 +1,51 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    <h1>HOME PAGE!</h1>
-    <p>Welcome {{current_user.username}} to the Flight Tracker Application!</p>
+    <div class="break-out" style="width:50%; height:50%">
+        <h1>HOME PAGE!</h1>
+        <p>Welcome {{current_user.username}} to the Flight Tracker Application!</p>
 
-    <button style="background-color: #ff9800; padding:10px; border-radius: 5px;">
-        <a href="/api/flights" style="color:black; font-weight: bold;">FLIGHTS PAGE</a>
-    </button>
+        <button style="background-color: #ff9800; padding:10px; border-radius: 5px;">
+            <a href="/api/flights" style="color:black; font-weight: bold;">FLIGHTS PAGE</a>
+        </button>
         
-    <br><br>
+        <br><br>
 
-    {% if current_user.is_admin%}
+        {% if current_user.is_admin%}
     
-    <button style="background-color: #ff9800; padding: 10px;  border-radius: 5px;">
-        <a href="/api/create_flight" style="color:black; font-weight: bold;">CREATE FLIGHT</a>
-     </button>
-       
+        <button style="background-color: #ff9800; padding: 10px;  border-radius: 5px;">
+            <a href="/api/create_flight" style="color:black; font-weight: bold;">CREATE FLIGHT</a>
+        </button>
+    </div>
+    <div class="break-out" style="background-color: #3d2822; margin-bottom:-37px;">
+        <h2>Planes</h2>
+        {% for plane in planes %}
+        <p>Plane model: {{plane.model}}</p>
+        <p>Plane capacity: {{plane.capacity}}</p>
+        {% endfor %}
+    </div>
+    <div class="break-out" style="background-color: #ff9800">
+        <h2>Pilots</h2>
+        {% for pilot in pilots %}
+        <p>Pilot Name: {{pilot.name}}</p>
+        {% endfor %}
+    </div>
     {% endif %}
     
     <style>
     body{
         background-color: beige;
+    }
+
+    .break-out{
+        width:100vw;
+        height: 100vh;
+        left:50%;
+        right:50%;
+        margin-right:-50vw;
+        margin-left:-50vw;
+        position: relative;
+        padding-left: 30px;    
     }
     </style>
 
