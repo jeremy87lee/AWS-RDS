@@ -16,7 +16,12 @@
         <button style="background-color: #ff9800; padding: 10px;  border-radius: 5px;">
             <a href="/api/create_flight" style="color:black; font-weight: bold;">CREATE FLIGHT</a>
         </button>
+
+        {% endif %}
     </div>
+    
+        
+    
     <div class="break-out" style="background-color: #3d2822; margin-bottom:-37px;">
         <h2>Planes</h2>
         <div class="lists">
@@ -36,8 +41,7 @@
             {% endfor %}
         </div>
     </div>
-    {% endif %}
-    
+
     <style>
     body{
         background-color: beige;
