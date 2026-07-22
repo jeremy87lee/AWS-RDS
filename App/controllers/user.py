@@ -209,7 +209,7 @@ def update_pilot(pilot_id,name):
 
 #Code to delete gate, plane, and pilot information from the database
 def delete_gate(gate_id):
-    gate = Gate.query.get(gate_id)
+    gate = Gate.query.get(gate_id)  
     if gate:
         db.session.delete(gate)
         db.session.commit()
@@ -218,7 +218,12 @@ def delete_gate(gate_id):
 
 def delete_plane(plane_id):
     plane = Plane.query.get(plane_id)
+    flights = Flight.query.all()
+    plane_id = int(plane_id)
     if plane:
+        for f in flights:
+            if f.plane_id == plane_id:
+                db.session.delete(f)
         db.session.delete(plane)
         db.session.commit()
         return True
@@ -226,7 +231,12 @@ def delete_plane(plane_id):
 
 def delete_pilot(pilot_id):
     pilot = Pilot.query.get(pilot_id)
+    flights = Flight.query.all()
+    pilot_id = int(pilot_id)
     if pilot:
+        for f in flights:
+            if f.pilot_id == pilot_id:
+                db.session.delete(f)
         db.session.delete(pilot)
         db.session.commit()
         return True
