@@ -136,6 +136,12 @@ def get_all_admins_json():
 def delete_flight(flight_id):
     flight = Flight.query.get(flight_id)
     if flight:
+        gates = Gate.query.all()
+        flight_id = int(flight_id)
+        for g in gates:
+            if g.flight == flight_id:
+                print(f"gate deleted")
+                db.session.delete(g)
         db.session.delete(flight)
         db.session.commit()
         return True
