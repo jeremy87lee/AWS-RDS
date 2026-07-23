@@ -24,20 +24,28 @@
     
     <div class="break-out" style="background-color: #3d2822; margin-bottom:-37px;">
         <h2>Planes</h2>
-        <div class="lists">
+        <div class="lists" style="padding:100px;">
             {% for plane in planes %}
-            <div>
-                <p>Plane model: {{plane.model}}</p>
-                <p>Plane capacity: {{plane.capacity}}</p>
+            <div class="cards">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/1/10/Avatar_plane.png" style="width 100%;">
+                <div class="cont">
+                    <p>Plane model: {{plane.model}}</p>
+                    <p>Plane capacity: {{plane.capacity}}</p>
+                </div>
             </div>
             {% endfor %}
         </div>
     </div>
     <div class="break-out" style="background-color: #ff9800">
         <h2>Pilots</h2>
-        <div class="lists">
+        <div class="lists" style="padding:100px;">
             {% for pilot in pilots %}
-            <p>Pilot Name: {{pilot.name}}</p>
+            <div class="cards">
+                <img src="https://png.pngtree.com/png-vector/20220807/ourmid/pngtree-man-avatar-wearing-gray-suit-png-image_6102786.png" style="width 100%;">
+                <div class="cont" style="margin-top:-5px;">
+                    <p>Pilot Name: {{pilot.name}}</p>
+                </div>
+            </div>
             {% endfor %}
         </div>
     </div>
@@ -64,6 +72,23 @@
         gap: 50px;
         align-items: center;
         justify-content: center;
+    }
+
+    .cards{
+        /* Add shadows to create the "card" effect */
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+        background-color: #d8d8d8;
+    }
+
+    /* On mouse-over, add a deeper shadow */
+    .cards:hover {
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
+    
+    .cont{
+        padding: 2px 16px;
+        background-color: #f9f7f4;
     }
 
     
