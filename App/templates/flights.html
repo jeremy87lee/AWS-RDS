@@ -9,7 +9,7 @@
             <div class="list-content">
                 <div class="words" style="font-weight:bold;font-size:20px;color:beige;">  
                 <li>{{ flight.id }} - {{ flight.departure_destination }} to {{ flight.destination }}</li>
-                <li>{{flight.plane.model}} - {{flight.pilot.name}}</li>
+                <li>Plane number {{flight.plane.id}} - {{flight.plane.model}} - {{flight.pilot.name}}</li>
                 <li>Departure: {{ flight.departure_time }} - Arrival: {{ flight.arrival_time }}</li>
                 </div>
                 {% if is_admin %}

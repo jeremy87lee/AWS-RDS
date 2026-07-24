@@ -57,6 +57,6 @@ def update_plane_action():
     plane_capacity = request.form.get('capacity')
     success = update_plane(plane_id,plane_model,plane_capacity)
     if not success:
-        flash("Plane could not be created")
-    flash("Plane created!")
+        flash("Plane could not be updated")
+    flash("Plane updated!")
     return redirect(url_for('index_views.home_page'))
