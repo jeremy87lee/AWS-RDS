@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Plane Creation
+{% endblock %}
+
+{% block content %}
+    <h1>Plane Creation</h1>
+    <p>Create a new plane here.</p>
+    <form action="/api/plane_creation" method="POST">
+        <label for="model">Model:</label>
+        <input type="text" id="model" name="model" required><br><br>
+
+        <label for="capacity">Capacity:</label>
+        <input type="text" id="capacity" name="capacity" required><br><br>
+
+        <button type="submit">Create Plane</button>
+    </form>
+{% endblock %}

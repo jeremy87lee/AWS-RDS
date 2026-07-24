@@ -24,3 +24,21 @@ def delete_plane_action():
     else:
         return redirect(url_for('index_views.home_page'))
     
+@plane_views.route('/api/create_plane',methods=['GET'])
+@jwt_required()
+def create_plane_page():
+    if not jwt_current_user.is_admin:
+        return jsonify({'message': 'Unauthorized access'}), 403
+    return render_template('Plane Creation.html')
+
+@plane_views.route('/api/plane_creation',methods=['POST'])
+def create_plane_action():
+    plane_model = request.form.get('model')
+    plane_capacity = request.form.get('capacity')
+    success = create_Plane(plane_model,plane_capacity)
+    if not success:
+        flash("Plane could not be created")
+    flash("Plane created!")
+    return redirect(url_for('index_views.home_page'))
+    
+    

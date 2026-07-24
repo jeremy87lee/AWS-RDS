@@ -24,6 +24,11 @@
     
     <div class="break-out" style="background-color: #3d2822; margin-bottom:-37px;">
         <h2 style="color:beige;font-weight:bold;">PLANES</h2>
+        {% if current_user.is_admin %}
+            <button>
+                <a href="/api/create_plane">CREATE PLANE</a>
+            </button>
+        {% endif %}
         <div class="lists" style="padding:100px;">
             {% for plane in planes %}
             <div class="cards">
