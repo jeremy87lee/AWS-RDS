@@ -2,25 +2,25 @@
 
 {% block content %}
 <div class="break-out" style="padding-left:30px;">
-    <h1>FLIGHTS</h1>
+    <h1 style="color:beige;font-weight:bold;">FLIGHTS</h1>
     <div style="width:100%;">
         <ul>
             {% for flight in flights %}
             <div class="list-content">
-                <div class="words" style="font-weight:bold;font-size:16px;">  
+                <div class="words" style="font-weight:bold;font-size:20px;color:beige;">  
                 <li>{{ flight.id }} - {{ flight.departure_destination }} to {{ flight.destination }}</li>
                 <li>{{flight.plane.model}} - {{flight.pilot.name}}</li>
                 <li>Departure: {{ flight.departure_time }} - Arrival: {{ flight.arrival_time }}</li>
                 </div>
                 {% if is_admin %}
-                <div>
+                <div class="btn">
                     <form action="/api/delete_flight" method="POST">
                         <input type="hidden" name="flight_id" value="{{ flight.id }}">
-                        <button style="background-color:beige;font-size:20px;">Delete</button>
+                        <button style="background-color:beige;font-size:20px;border:none;width:100%;height:100%;font-weight:bold;color: #3d2822;">Delete</button>
                     </form>
                 </div>
-                <div style="background-color: #ff9800;">
-                    <button style="background-color:beige;">
+                <div class="btn">
+                    <button style="background-color:beige;font-size:20px;border:none;width:100%;height:100%;font-weight:bold;color: #3d2822;">
                         <a href="/api/update_flight/{{ flight.id }}" style="color:black;font-size:20px;">Update</a>
                     </button>
                 </div>
@@ -49,19 +49,25 @@
         .list-content{
             box-shadow: 0px 5px 10px;
             background-color: rgb(128, 85, 42);
-            display: flex; 
+            display:grid;
+            grid-template-columns: 3fr 1fr 1fr; 
             padding:15px;
             margin:15px; 
-            align-items:center;  
-            gap:600px;       
+            align-items:center; 
+            overflow:hidden; 
+            gap:30px;
         }
 
         .words{
+            display: flex;
             flex-direction:column;
+            gap:5px;
         }
 
-        .button{
-            display: inline-block;
+        .btn{
+            background-color:beige;
+            border-radius: 5px;
         }
+        
     </style>    
 {% endblock %}
