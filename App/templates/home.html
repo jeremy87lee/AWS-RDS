@@ -42,6 +42,9 @@
                         <input type="hidden" name="plane_id" value="{{ plane.id }}">
                         <button>Delete</button>
                     </form>
+                    <button>
+                        <a href='/api/update_plane/{{plane.id}}'>Update</a>
+                    </button>
                     {% endif %}
                 </div>
             </div>

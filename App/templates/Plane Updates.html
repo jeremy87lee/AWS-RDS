@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block title%}Plane Updates{% endblock %}
+
+{% block content %}
+<h1>Plane Updates</h1>
+<p>Use this page to update plane information.</p>
+<form action="/api/update_plane" method="POST">
+    <label for="plane_id">Plane ID:</label>
+    <input type="text" id="plane_id" name="plane_id" value="{{ plane.id }}" readonly><br><br>
+
+    <label for="model">Model:</label>
+    <input type="text" id="model" name="model" value="{{plane.model}}"><br><br>
+
+    <label for="capacity">Capacity:</label>
+    <input type="text" id="capacity" name="capacity" value="{{plane.capacity}}"><br><br>
+
+    <button type="submit">Update Plane</button>
+</form>
+{% endblock %}

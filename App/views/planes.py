@@ -40,5 +40,23 @@ def create_plane_action():
         flash("Plane could not be created")
     flash("Plane created!")
     return redirect(url_for('index_views.home_page'))
-    
-    
+
+@plane_views.route('/api/update_plane/<int:plane_id>',methods=['GET'])
+def plane_update_page(plane_id):
+    plane = Plane.query.get(plane_id)
+    if not plane:
+        flash("Plane not found")
+        return redirect(url_for('index_views.home_page'))
+    return render_template('Plane Updates.html',plane=plane)
+
+@plane_views.route('/api/update_plane',methods=['POST'])
+def update_plane_action():
+    plane_id = request.form.get('plane_id')
+    plane_id = int(plane_id)
+    plane_model = request.form.get('model')
+    plane_capacity = request.form.get('capacity')
+    success = update_plane(plane_id,plane_model,plane_capacity)
+    if not success:
+        flash("Plane could not be created")
+    flash("Plane created!")
+    return redirect(url_for('index_views.home_page'))
