@@ -2,22 +2,28 @@
 
 {% block content %}
 <div class="break-out" style="padding-left:30px;">
-    <h1>Flights</h1>
+    <h1>FLIGHTS</h1>
     <div style="width:100%;">
         <ul>
             {% for flight in flights %}
             <div class="list-content">
-                <div class="words">  
+                <div class="words" style="font-weight:bold;font-size:16px;">  
                 <li>{{ flight.id }} - {{ flight.departure_destination }} to {{ flight.destination }}</li>
                 <li>{{flight.plane.model}} - {{flight.pilot.name}}</li>
                 <li>Departure: {{ flight.departure_time }} - Arrival: {{ flight.arrival_time }}</li>
                 </div>
                 {% if is_admin %}
-                <form action="/api/delete_flight" method="POST">
-                    <input type="hidden" name="flight_id" value="{{ flight.id }}">
-                    <button>Delete</button>
-                </form>
-                <a href="/api/update_flight/{{ flight.id }}">Update</a>
+                <div>
+                    <form action="/api/delete_flight" method="POST">
+                        <input type="hidden" name="flight_id" value="{{ flight.id }}">
+                        <button style="background-color:beige;font-size:20px;">Delete</button>
+                    </form>
+                </div>
+                <div style="background-color: #ff9800;">
+                    <button style="background-color:beige;">
+                        <a href="/api/update_flight/{{ flight.id }}" style="color:black;font-size:20px;">Update</a>
+                    </button>
+                </div>
                 {% endif %}
             </div>
             {% endfor %}
@@ -27,7 +33,7 @@
 </div>
     <style>
         body{
-            background-color:beige;
+            background-color: #4c340f;
         }
 
         .break-out{
@@ -42,7 +48,7 @@
         
         .list-content{
             box-shadow: 0px 5px 10px;
-            background-color: #664a20;
+            background-color: rgb(128, 85, 42);
             display: flex; 
             padding:15px;
             margin:15px; 
@@ -52,6 +58,10 @@
 
         .words{
             flex-direction:column;
+        }
+
+        .button{
+            display: inline-block;
         }
     </style>    
 {% endblock %}
