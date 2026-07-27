@@ -27,16 +27,16 @@ def export_excel():
         ws.append([
             g.id,
             g.terminal,
-            g.flights.id if g.flights.id else "N/A",
-            g.flights.departure_destination if g.flights.departure_destination else "N/A",
-            g.flights.destination if g.flights.destination else "N/A",
-            g.flights.plane.id if g.flights.plane.id else "N/A",
-            g.flights.plane.model if g.flights.plane.model else "N/A",
-            g.flights.plane.capacity if g.flights.plane.capacity else "N/A",
-            g.flights.pilot.id if g.flights.pilot.id else "N/A",
-            g.flights.pilot.name if g.flights.pilot.name else "N/A",
-            g.flights.departure_time if g.flights.departure_time else "N/A",
-            g.flights.arrival_time if g.flights.arrival_time else "N/A"
+            g.flights.id if g.flights else "N/A",
+            g.flights.departure_destination if g.flights else "N/A",
+            g.flights.destination if g.flights else "N/A",
+            g.flights.plane.id if g.flights else "N/A",
+            g.flights.plane.model if g.flights else "N/A",
+            g.flights.plane.capacity if g.flights else "N/A",
+            g.flights.pilot.id if g.flights else "N/A",
+            g.flights.pilot.name if g.flights else "N/A",
+            g.flights.departure_time if g.flights else "N/A",
+            g.flights.arrival_time if g.flights else "N/A"
         ]) 
         
     # Save to an in-memory buffer instead of disk
