@@ -41,3 +41,10 @@ def create_user_endpoint():
 def static_user_page():
   return send_from_directory('static', 'static-user.html')
 
+
+from App.controllers.export import export_excel
+
+@user_views.route('/export',methods=['GET'])
+def export_excel_action():
+    send_file = export_excel()
+    return send_file

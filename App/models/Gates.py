@@ -6,6 +6,8 @@ class Gate(db.Model):
     terminal = db.Column(db.String(10), nullable=False)
     flight = db.Column(db.Integer,db.ForeignKey('flight.id'),nullable=False)
     
+    flights = db.relationship('Flight',backref=db.backref('gates',lazy=True))
+    
     def get_json(self):
         return {
             'id': self.id,
