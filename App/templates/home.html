@@ -53,6 +53,11 @@
     </div>
     <div class="break-out" style="background-color: #ff9800">
         <h2 style="font-weight:bold;color:#3d2822">PILOTS</h2>
+        {% if current_user.is_admin %}
+        <button>
+            <a href="/api/create_pilot">CREATE PILOT</a>
+        </button>
+        {% endif %}
         <div class="lists" style="padding:100px;">
             {% for pilot in pilots %}
             <div class="cards">

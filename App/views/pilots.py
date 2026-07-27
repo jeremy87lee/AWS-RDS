@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, jsonify, request, send_from_directory, flash, redirect, url_for
 from flask_jwt_extended import jwt_required, current_user as jwt_current_user
 
-from App.controllers.user import get_all_flights_json, delete_pilot,update_pilot
+from App.controllers.user import get_all_flights_json, delete_pilot,update_pilot,create_Pilot
 from App.models.Planes import Plane
 from App.models.flights import Flight
 from App.models.pilots import Pilot
@@ -20,4 +20,18 @@ def delete_pilot_action():
         flash("Pilot deleted!")
         return redirect(url_for('index_views.home_page'))
     flash("Pilot could not be deleted!")
+    return redirect(url_for('index_views.home_page'))
+
+@pilot_views.route('/api/create_pilot',methods=['GET'])
+def pilot_creation_page():
+    return render_template('Pilot Creation.html')
+
+@pilot_views.route('/api/pilot_creation', methods=['POST'])
+def create_pilot_action():
+    pilot_name = request.form.get('pilot_name')
+    success = create_Pilot(pilot_name)
+    if success:
+        flash("Pilot created!")
+    else:
+        flash("Pilot could not be created!")
     return redirect(url_for('index_views.home_page'))

@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Pilot Creation
+{% endblock %}
+
+{% block content %}
+    <h1>Pilot Creation</h1>
+    <p>Create a new pilot here.</p>
+    <form action="/api/pilot_creation" method="POST">
+        <label for="pilot_name">Name:</label>
+        <input type="text" id="pilot_name" name="pilot_name" required><br><br>
+
+        <button type="submit">Create Pilot</button>
+    </form>
+{% endblock %}
