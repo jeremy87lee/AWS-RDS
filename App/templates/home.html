@@ -59,6 +59,12 @@
                 <img src="https://png.pngtree.com/png-vector/20220807/ourmid/pngtree-man-avatar-wearing-gray-suit-png-image_6102786.png" style="width 100%;background-color: #3d2822;">
                 <div class="cont" style="margin-top:-5px;">
                     <p>Pilot Name: {{pilot.name}}</p>
+                    {% if current_user.is_admin %}
+                    <form action="/api/delete_pilot" method="POST">
+                        <input type="hidden" value="{{pilot.id}}" name="pilot_id">
+                        <button>Delete</button>
+                    </form>
+                    {% endif %}
                 </div>
             </div>
             {% endfor %}

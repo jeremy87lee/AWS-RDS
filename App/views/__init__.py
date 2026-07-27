@@ -6,7 +6,8 @@ from .auth import auth_views
 from .admin import setup_admin
 from .flights import flight_views
 from .planes import plane_views
+from .pilots import pilot_views
 
 
-views = [user_views, index_views, auth_views, flight_views, plane_views] 
+views = [user_views, index_views, auth_views, flight_views, plane_views, pilot_views] 
 # blueprints must be added to this list
