@@ -35,3 +35,20 @@ def create_pilot_action():
     else:
         flash("Pilot could not be created!")
     return redirect(url_for('index_views.home_page'))
+
+@pilot_views.route('/api/pilot_updates/<int:pilot_id>',methods=['GET'])
+def pilot_update_page(pilot_id):
+    pilot = Pilot.query.get(pilot_id)
+    return render_template('Pilot Updates.html',pilot=pilot)
+
+@pilot_views.route('/api/update_pilot',methods=['POST'])
+def update_pilot_action():
+    pilot_id = request.form.get('pilot_id')
+    pilot_id = int(pilot_id)
+    pilot_name = request.form.get('pilot_name')
+    success = update_pilot(pilot_id,pilot_name)
+    if success:
+        flash("Pilot updated!")
+        return redirect(url_for('index_views.home_page'))
+    flash("Pilot could not be updated!")
+    return redirect(url_for('index_views.home_page'))

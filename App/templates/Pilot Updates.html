@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block title%}Pilot Updates{% endblock %}
+
+{% block content %}
+<h1>Pilot Updates</h1>
+<p>Use this page to update pilot information.</p>
+<form action="/api/update_pilot" method="POST">
+    <label for="pilot_id">Pilot ID:</label>
+    <input type="text" id="pilot_id" name="pilot_id" value="{{ pilot.id }}" readonly><br><br>
+
+    <label for="pilot_name">Name:</label>
+    <input type="text" id="pilot_name" name="pilot_name" value="{{pilot.name}}"><br><br>
+
+
+    <button type="submit">Update Pilot</button>
+</form>
+{% endblock %}
