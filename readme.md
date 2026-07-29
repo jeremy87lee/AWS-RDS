@@ -14,5 +14,8 @@ $ pip install -r requirements.txt
 ```
 
 # NOTES FOR USERS
-Admins, when inputting times on forms, please ensure double digits are entered at all times. For instance, when inputting 
+.Admins, when inputting times on forms, please ensure double digits are entered at all times. For instance, when inputting 
 a time of 9, input "09:00" NOT "9:00".
+
+.Admin login: username: "admin" password: "adminpass"
+.Regular User login: username: "bob" password: "bobpass"
