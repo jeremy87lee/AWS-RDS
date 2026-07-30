@@ -20,5 +20,5 @@ a time of 9, input "09:00" NOT "9:00".
 .Admin login: username: "admin" password: "adminpass"
 .Regular User login: username: "bob" password: "bobpass"
 
-# DEPLOYED SERVICE
+# DEPLOYED SERVICE WITH AWS RDS DATABASE
 https://flightwebapp.onrender.com/
