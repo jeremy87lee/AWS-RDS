@@ -29,6 +29,9 @@ def pilot_creation_page():
 @pilot_views.route('/api/pilot_creation', methods=['POST'])
 def create_pilot_action():
     pilot_name = request.form.get('pilot_name')
+    if not pilot_name:
+        flash("Missing required fields")
+        return redirect(url_for('index_views.home_page'))
     success = create_Pilot(pilot_name)
     if success:
         flash("Pilot created!")
@@ -46,6 +49,9 @@ def update_pilot_action():
     pilot_id = request.form.get('pilot_id')
     pilot_id = int(pilot_id)
     pilot_name = request.form.get('pilot_name')
+    if not pilot_id or not pilot_name:
+        flash("Missing required fields")
+        return redirect(url_for('index_views.home_page'))
     success = update_pilot(pilot_id,pilot_name)
     if success:
         flash("Pilot updated!")

@@ -35,6 +35,9 @@ def create_plane_page():
 def create_plane_action():
     plane_model = request.form.get('model')
     plane_capacity = request.form.get('capacity')
+    if not plane_model or not plane_capacity:
+        flash("Missing required fields")
+        return redirect(url_for('index_views.home_page'))
     success = create_Plane(plane_model,plane_capacity)
     if not success:
         flash("Plane could not be created")
@@ -55,6 +58,9 @@ def update_plane_action():
     plane_id = int(plane_id)
     plane_model = request.form.get('model')
     plane_capacity = request.form.get('capacity')
+    if not plane_id or not plane_model or not plane_capacity:
+        flash("Missing required fields")
+        return redirect(url_for('index_views.home_page'))
     success = update_plane(plane_id,plane_model,plane_capacity)
     if not success:
         flash("Plane could not be updated")
